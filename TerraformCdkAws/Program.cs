@@ -10,7 +10,7 @@ public class Program
         var app = new App();
         var service = new StackService(config, app);
         service.Synthesize();
-        Console.WriteLine("Akashic application synth complete!");
+        Console.WriteLine("Test application synth complete!");
     }
 
     private static IConfiguration CreateConfiguration()

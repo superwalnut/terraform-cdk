@@ -1,6 +1,8 @@
-﻿using HashiCorp.Cdktf;
+﻿using Constructs;
+using HashiCorp.Cdktf;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,15 +26,27 @@ namespace TerraformCdkAws
         public void Synthesize()
         {
             var appContext = _configuration.GetSection("TerraformContext").Get<TerraformContext>();
-            var globalStack = SetupGlobalStack(_app, appContext);
+            var globalStack = SetupMainStack(_app, appContext);
+            SetupBackend(_app, appContext, globalStack);
+
             _app.Synth();
         }
 
-        private GlobalStack SetupGlobalStack(App app, TerraformContext context)
+        private MainStack SetupMainStack(App app, TerraformContext context)
         {
-            return new GlobalStack(app, context);
+            return new MainStack(app, context);
         }
 
-
+        private TerraformBackend SetupBackend(Construct construct, TerraformContext context, TerraformStack mainStack)
+        {
+            return new RemoteBackend(
+                mainStack,
+                new RemoteBackendProps
+                {
+                    Hostname = "app.terraform.io",
+                    Organization = "Precise Agency Pty Ltd",
+                    Workspaces = new NamedRemoteWorkspace("learn-cdktf")
+            });
+        }
     }
 }

@@ -1,0 +1,23 @@
+{
+  "//": {
+    "metadata": {
+      "backend": "remote",
+      "cloud": "tfc",
+      "stackName": "test_stack",
+      "version": "0.14.1"
+    },
+    "outputs": {
+    }
+  },
+  "terraform": {
+    "backend": {
+      "remote": {
+        "hostname": "app.terraform.io",
+        "organization": "<YOUR_ORG>",
+        "workspaces": {
+          "name": "learn-cdktf"
+        }
+      }
+    }
+  }
+}
