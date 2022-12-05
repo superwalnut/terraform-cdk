@@ -26,8 +26,8 @@ namespace TerraformCdkAws
         public void Synthesize()
         {
             var appContext = _configuration.GetSection("TerraformContext").Get<TerraformContext>();
-            var globalStack = SetupMainStack(_app, appContext);
-            SetupBackend(_app, appContext, globalStack);
+            var mainStack = SetupMainStack(_app, appContext);
+            SetupBackend(_app, appContext, mainStack);
 
             _app.Synth();
         }
